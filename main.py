@@ -1,7 +1,8 @@
 import nltk	
 from nltk.parse.chart import ChartParser,BU_LC_STRATEGY
 grammar1 = nltk.CFG.fromstring("""
-  program -> exp_stmt | for_stmt | while_stmt | if_stmt | print_stmt | input_stmt
+  program -> exp_stmt | for_stmt | while_stmt | if_stmt | print_stmt | input_stmt | assign
+  assign -> indentifer '=' exp_stmt | indentifer '=' number
   print_stmt -> 'print' '(' content ')'
   input_stmt -> 'input' '(' content ')'
   exp_stmt -> number '*' number | number '-' number | number '+' number | number '/' number
@@ -14,11 +15,11 @@ grammar1 = nltk.CFG.fromstring("""
   block -> if_stmt|'p'
   indentifer -> 'var'
   compare -> '<'|'>'|'>='|'<='|'=='
-  number -> 'num'
+  number -> 'num'|'('exp_stmt')'
   value ->'('number')'|'('number','number')'
   content -> 'string' | number
   """)
-sent = "num *".split()
+sent = "var = num * ( num + num )".split()
 rd_parser = nltk.RecursiveDescentParser(grammar1)
 try:
 	if len(list(rd_parser.parse(sent))) == 0:
