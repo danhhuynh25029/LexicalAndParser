@@ -6,7 +6,9 @@ class Lexical:
 		self.pos = 0
 	def convert_to_token(self):
 		while self.pos < len(self.text):
-			if re.match('\s',self.text[self.pos]):
+			if self.text[self.pos] == '\t':
+				self.tokens.append('tab')
+			elif re.match('\s',self.text[self.pos]):
 				pass
 			elif re.match('[a-z]',self.text[self.pos]):
 				self.String()
@@ -18,10 +20,10 @@ class Lexical:
 				self.Compare()
 			elif re.match('\*',self.text[self.pos]) or re.match('\-',self.text[self.pos]) or re.match('\+',self.text[self.pos]) or re.match('\/',self.text[self.pos]):
 				self.tokens.append(self.text[self.pos])
-			elif re.match('\t',self.text[self.pos]):
-				self.tokens.append('tab')
 			elif re.match(':',self.text[self.pos]):
 				self.tokens.append('colon')
+			elif re.match(',',self.text[self.pos]):
+				self.tokens.append(',')
 			self.pos += 1
 			
 	def String(self):
@@ -66,10 +68,22 @@ class Lexical:
 		else:
 			self.tokens.append(self.text[i])
 	def ConvertToPro(self):
-		pass
+		tmp = ['if','print','in','range','while',',','else','elif','colon','tab',')','(','True','False','==','=','<','>','<=','>=','for']
+		for i in range(len(self.tokens)):
+			if self.tokens[i] not in tmp:
+				if re.match('[0-9]',self.tokens[i]):
+					self.tokens[i] = 'num'
+				else:
+					self.tokens[i] = 'var'
 
 	def getTokens(self):
+		self.ConvertToPro()
 		return self.tokens
-l = Lexical("	")
+s = ""
+f = open('input','r')
+for i in f:
+	s += i.rstrip('\n')
+l = Lexical(s)
 l.convert_to_token()
-print(l.getTokens())
+c = l.getTokens()
+print(c)
