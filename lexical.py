@@ -73,8 +73,13 @@ class Lexical:
 			if self.tokens[i] not in tmp:
 				if re.match('[0-9]',self.tokens[i]):
 					self.tokens[i] = 'num'
-				else:
-					self.tokens[i] = 'var'
+		for i in range(len(self.tokens)):
+			if self.tokens[i] not in tmp and self.tokens[i] !='num':
+				 j = i
+				 if self.tokens.count(self.tokens[i]) >= 2:
+				 	for j in range(len(self.tokens)):
+				 		if self.tokens[i] == self.tokens[j]:
+				 			self.tokens[j] ='var'				
 
 	def getTokens(self):
 		self.ConvertToPro()
