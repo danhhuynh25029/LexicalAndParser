@@ -70,16 +70,25 @@ class Lexical:
 	def ConvertToPro(self):
 		tmp = ['if','print','in','range','while',',','else','elif','colon','tab',')','(','True','False','==','=','<','>','<=','>=','for']
 		for i in range(len(self.tokens)):
+			if self.tokens[i] not in tmp and self.tokens[i] !='num':
+				 j = i
+				 t = self.tokens[i]
+				 if self.tokens.count(self.tokens[i]) >= 2 and re.match('[a-z]',self.tokens[i]):
+				 	for j in range(len(self.tokens)):
+				 		if t == self.tokens[j]:
+				 			self.tokens[j] ='var'		
+		for i in range(len(self.tokens)):
 			if self.tokens[i] not in tmp:
 				if re.match('[0-9]',self.tokens[i]):
 					self.tokens[i] = 'num'
-		for i in range(len(self.tokens)):
-			if self.tokens[i] not in tmp and self.tokens[i] !='num':
-				 j = i
-				 if self.tokens.count(self.tokens[i]) >= 2:
-				 	for j in range(len(self.tokens)):
-				 		if self.tokens[i] == self.tokens[j]:
-				 			self.tokens[j] ='var'				
+				elif i == 0  and re.match('[a-z]',self.tokens[i]):
+					self.tokens[i] = 'var'
+				elif i > 0 and self.tokens[i] != 'var' and self.tokens[i-1] != 'while' and self.tokens[i-1] != 'for' and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'elif' and self.tokens[i+1] == '=':
+					self.tokens[i] = 'var'
+				elif i > 0 and self.tokens[i-1] == 'for':
+					self.tokens[i] = 'var'
+
+				
 
 	def getTokens(self):
 		self.ConvertToPro()
