@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from parser import *
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        self.i = 10
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(614, 268)
         MainWindow.setIconSize(QtCore.QSize(21, 21))
@@ -46,13 +47,24 @@ class Ui_MainWindow(object):
         t = self.textEdit.toPlainText()
         f = open('input','w')
         f.write(t)
-        check = checkSyntax()
-        print(check)
+        f.close()
+        s = ""
+        inp = open('input','r')
+        for i in inp:
+            s += i.rstrip('\n')
+        l = Lexical(s)
+        l.convert_to_token()
+        c = l.getTokens()
+        inp.close()
+        tmp = l.getCheck()
+        check = checkSyntax(c)
+        if len(tmp) > 0:
+            check = False
         if check == True:
             self.textEdit_2.setText('syntax correct')
         else:
-            print(1)
             self.textEdit_2.setText('syntax error')
+        f.close()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))

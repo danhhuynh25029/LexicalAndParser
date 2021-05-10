@@ -4,6 +4,7 @@ class Lexical:
 		self.text = text
 		self.tokens = []
 		self.pos = 0
+		self.check = []
 	def convert_to_token(self):
 		while self.pos < len(self.text):
 			if self.text[self.pos] == '\t':
@@ -73,10 +74,15 @@ class Lexical:
 			if self.tokens[i] not in tmp and self.tokens[i] !='num':
 				 j = i
 				 t = self.tokens[i]
-				 if self.tokens.count(self.tokens[i]) >= 2 and re.match('[a-z]',self.tokens[i]):
+				 if self.tokens.count(self.tokens[i]) >= 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
 				 	for j in range(len(self.tokens)):
 				 		if t == self.tokens[j]:
-				 			self.tokens[j] ='var'		
+				 			self.tokens[j] ='var'
+				 else:
+				 	if self.tokens[i-1] == 'while' or self.tokens[i-1] == 'if':
+				 		if self.tokens.count(self.tokens[i]) <= 2:
+				 			self.check.append(self.tokens[i])
+				 			# print(self.check)		
 		for i in range(len(self.tokens)):
 			if self.tokens[i] not in tmp:
 				if re.match('[0-9]',self.tokens[i]):
@@ -93,11 +99,15 @@ class Lexical:
 	def getTokens(self):
 		self.ConvertToPro()
 		return self.tokens
-s = ""
-f = open('input','r')
-for i in f:
-	s += i.rstrip('\n')
-l = Lexical(s)
-l.convert_to_token()
-c = l.getTokens()
-print(c)
+	def getCheck(self):
+		# print(self.check)
+		return self.check
+# s = ""
+# f = open('input','r')
+# for i in f:
+# 	s += i.rstrip('\n')
+# l = Lexical(s)
+# l.convert_to_token()
+# c = l.getTokens()
+# f.close()
+# print("lexical")
