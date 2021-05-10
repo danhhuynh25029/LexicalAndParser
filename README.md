@@ -5,6 +5,6 @@ Thư viện sử dụng:
 * nltk
 
 > pip install nltk
-* qt
+* qt5
 
 > pip install pyqt5
