@@ -78,8 +78,11 @@ class Lexical:
 				 	for j in range(len(self.tokens)):
 				 		if t == self.tokens[j]:
 				 			self.tokens[j] ='var'
+				 elif self.tokens.count(self.tokens[i]) < 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
+				 	if i != 0:
+				 		self.tokens[i] ='string'
 				 else:
-				 	if self.tokens[i-1] == 'while' or self.tokens[i-1] == 'if':
+				 	if self.tokens[i-1] == 'while' or self.tokens[i-1] == 'if' and re.match('[a-z]',self.tokens[i]) and self.tokens[i] != 'var':
 				 		if self.tokens.count(self.tokens[i]) <= 2:
 				 			self.check.append(self.tokens[i])
 				 			# print(self.check)		

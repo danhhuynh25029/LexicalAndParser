@@ -4,7 +4,7 @@ from nltk.parse.chart import ChartParser,BU_LC_STRATEGY
 grammar1 = nltk.CFG.fromstring("""
   program -> exp_stmt | for_stmt | while_stmt | if_stmt | print_stmt | input_stmt |  block | assign
   assign -> indentifer '=' exp_stmt | indentifer '=' number | indentifer '=' content | indentifer '=' exp_stmt assign_s | indentifer '=' number assign_s | indentifer '=' content assign_s | 
-  print_stmt -> 'print' '(' content ')' | 'print' '(' content ')' print_s
+  print_stmt -> 'print' '(' content ')' | 'print' '(' content ')' print_s |
   exp_stmt -> number '*' number | number '-' number | number '+' number | number '/' number | indentifer '*' indentifer | indentifer '-' indentifer | indentifer '+' indentifer | indentifer '/' indentifer
   for_stmt -> 'for' indentifer 'in' 'range' value 'colon' 'tab' block
   while_stmt -> 'while' exp 'colon' 'tab' block | assign 'while' exp 'colon' 'tab' block
@@ -13,8 +13,9 @@ grammar1 = nltk.CFG.fromstring("""
   elif_stmt -> 'elif' exp 'colon' 'tab' block elif_stmt|if_stmt
   exp -> 'True'|'False'|indentifer compare indentifer|indentifer compare number | number compare number
   block -> if_stmt|print_stmt | assign | 'tab' block
+  block_s -> if_stmt | assign
   print_s -> print_stmt
-  assign_s -> assign
+  assign_s -> assign |if_stmt
   indentifer -> 'var'
   compare -> '<'|'>'|'>='|'<='|'=='
   number -> 'num'|'('exp_stmt')'
@@ -51,6 +52,7 @@ if __name__ == "__main__":
   c = l.getTokens()
   check = l.getCheck()
   f.close()
+  print(check)
   syntax = checkSyntax(c)
   if len(check) > 0:
     syntax = False
