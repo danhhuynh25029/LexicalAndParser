@@ -25,6 +25,28 @@ class Lexical:
 				self.tokens.append('colon')
 			elif re.match(',',self.text[self.pos]):
 				self.tokens.append(',')
+			elif re.match('"',self.text[self.pos]):
+				self.pos += 1
+				while True:
+					if self.text[self.pos] == '"':
+						self.tokens.append('string')
+						break
+					if self.pos == len(self.text) - 1:
+						self.tokens.clear()
+						self.tokens.append('error')
+						break
+					self.pos += 1
+			elif re.match("'",self.text[self.pos]):
+				self.pos += 1
+				while True:
+					if self.text[self.pos] == "'":
+						self.tokens.append('string')
+						break
+					if self.pos == len(self.text) - 1:
+						self.tokens.clear()
+						self.tokens.append('error')
+						break
+					self.pos += 1
 			self.pos += 1
 			
 	def String(self):
@@ -78,16 +100,17 @@ class Lexical:
 				 	for j in range(len(self.tokens)):
 				 		if t == self.tokens[j]:
 				 			self.tokens[j] ='var'
-				 elif self.tokens.count(self.tokens[i]) < 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
-				 	if i != 0:
-				 		self.tokens[i] ='string'
+				 # elif self.tokens.count(self.tokens[i]) < 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
+				 # 	if i != 0:
+				 # 		self.tokens[i] ='string'
 				 else:
 				 	if self.tokens[i-1] == 'while' or self.tokens[i-1] == 'if' and re.match('[a-z]',self.tokens[i]) and self.tokens[i] != 'var':
 				 		if self.tokens.count(self.tokens[i]) <= 2:
 				 			self.check.append(self.tokens[i])
-				 			# print(self.check)		
+				 			# print(self.check)
+		op = ['+','-','*','/']		
 		for i in range(len(self.tokens)):
-			if self.tokens[i] not in tmp:
+			if self.tokens[i] not in tmp and self.tokens[i] != '"' and self.tokens[i] != "'" and self.tokens[i] not in op:
 				if re.match('[0-9]',self.tokens[i]):
 					self.tokens[i] = 'num'
 				elif i == 0  and re.match('[a-z]',self.tokens[i]):

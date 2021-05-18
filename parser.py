@@ -3,22 +3,25 @@ from lexical import *
 from nltk.parse.chart import ChartParser,BU_LC_STRATEGY
 grammar1 = nltk.CFG.fromstring("""
   program -> exp_stmt | for_stmt | while_stmt | if_stmt | print_stmt | input_stmt |  block | assign
-  assign -> indentifer '=' exp_stmt | indentifer '=' number | indentifer '=' content | indentifer '=' exp_stmt assign_s | indentifer '=' number assign_s | indentifer '=' content assign_s | 
+  input_stmt -> indentifer '=' 'input' '(' ')'
+  assign -> indentifer '=' exp_stmt| indentifer '=' exp_stmt1 | indentifer '=' number | indentifer '=' content | indentifer '=' exp_stmt assign_s | indentifer '=' number assign_s | indentifer '=' content assign_s | 
   print_stmt -> 'print' '(' content ')' | 'print' '(' content ')' print_s |
   exp_stmt -> number '*' number | number '-' number | number '+' number | number '/' number | indentifer '*' indentifer | indentifer '-' indentifer | indentifer '+' indentifer | indentifer '/' indentifer
+  exp_stmt1 -> number '*' indentifer | number '-' indentifer | number '+' indentifer | number '/' indentifer | indentifer '*' number | indentifer '-' number | indentifer '+' number | indentifer '/' number
   for_stmt -> 'for' indentifer 'in' 'range' value 'colon' 'tab' block
-  while_stmt -> 'while' exp 'colon' 'tab' block | assign 'while' exp 'colon' 'tab' block
+  while_stmt -> 'while' exp 'colon' 'tab' block | assign 'while' exp 'colon' 'tab' block | 
   if_stmt -> 'if' exp 'colon' 'tab' block | 'if' exp 'colon' 'tab' block elif_stmt|'if' exp 'colon' 'tab' block else_block
   else_block -> 'else' 'colon' 'tab' block | if_stmt
   elif_stmt -> 'elif' exp 'colon' 'tab' block elif_stmt|if_stmt
   exp -> 'True'|'False'|indentifer compare indentifer|indentifer compare number | number compare number
-  block -> if_stmt|print_stmt | assign | 'tab' block
+  block -> if_stmt|print_stmt | assign | 'tab' block | indentifer '+' '=' n
   block_s -> if_stmt | assign
   print_s -> print_stmt
-  assign_s -> assign |if_stmt
+  assign_s -> assign |if_stmt | print_stmt
   indentifer -> 'var'
   compare -> '<'|'>'|'>='|'<='|'=='
-  number -> 'num'|'('exp_stmt')'
+  number -> 'num'|'('exp_stmt')' | '('exp_stmt1')'
+  n -> 'num'
   value ->'('number')'|'('number','number')'
   content -> 'string' | number | indentifer
   """)
@@ -30,6 +33,7 @@ def checkSyntax(c):
   syntax = True
   print(c)
   rd_parser = nltk.RecursiveDescentParser(grammar1)
+  
   try:
   	if len(list(rd_parser.parse(sent))) == 0:
   		del list(rd_parser.parse(sent))[0]
