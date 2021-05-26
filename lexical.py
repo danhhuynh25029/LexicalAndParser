@@ -11,7 +11,7 @@ class Lexical:
 				self.tokens.append('tab')
 			elif re.match('\s',self.text[self.pos]):
 				pass
-			elif re.match('[a-z]',self.text[self.pos]):
+			elif re.match('[a-z]|[A-Z]',self.text[self.pos]):
 				self.String()
 			elif re.match('[0-9]',self.text[self.pos]):
 				self.Number()
@@ -47,20 +47,30 @@ class Lexical:
 						self.tokens.append('error')
 						break
 					self.pos += 1
+			elif re.match("T",self.text[self.pos]) or re.match("F",self.text[self.pos]):
+				tmp += self.text[self.pos]
+				while True:
+					if self.pos == len(self.text) - 1:
+						self.tokens.clear()
+						self.tokens.append('error')
+						break
+					if re.match('[a-z]',self.text[self.pos]):
+						tmp += self.text[self.pos]
+					self.pos += 1
 			self.pos += 1
 			
 	def String(self):
 		i = self.pos
 		tmp = ""
 		while i < len(self.text):
-			if re.match('[a-z]|[0-9]',self.text[i]):
+			if re.match('[a-z]|[A-Z]|[0-9]',self.text[i]):
 				tmp += self.text[i]
 				self.pos += 1
 			if i == len(self.text) - 1:
 				self.tokens.append(tmp)
 				self.pos -= 1
 				break
-			if not re.match('[a-z]|[0-9]',self.text[i]):
+			if not re.match('[a-z]|[A-Z]|[0-9]',self.text[i]):
 				self.tokens.append(tmp)
 				self.pos -= 1
 				break
@@ -92,20 +102,29 @@ class Lexical:
 			self.tokens.append(self.text[i])
 	def ConvertToPro(self):
 		tmp = ['if','print','in','range','while',',','else','elif','colon','tab',')','(','True','False','==','=','<','>','<=','>=','for']
+		print(self.tokens)
 		for i in range(len(self.tokens)):
-			if self.tokens[i] not in tmp and self.tokens[i] !='num':
-				 j = i
-				 t = self.tokens[i]
-				 if self.tokens.count(self.tokens[i]) >= 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
+			if self.tokens[i] not in tmp and not re.match("[0-9]",self.tokens[i]) and self.tokens[i] != 'var':
+				cou = 0
+				for j in range(i,len(self.tokens)):
+					if self.tokens[j] == "colon" and cou < 2:
+						self.check.append(self.tokens[i])
+						break
+					if self.tokens[j] == self.tokens[i]:
+						cou += 1 
+						# print(self.tokens[j])
+						# print(cou)
+				t = self.tokens[i]
+				if self.tokens.count(self.tokens[i]) >= 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
 				 	for j in range(len(self.tokens)):
 				 		if t == self.tokens[j]:
 				 			self.tokens[j] ='var'
 				 # elif self.tokens.count(self.tokens[i]) < 2 and re.match('[a-z]',self.tokens[i]) and self.tokens[i-1] != 'if' and self.tokens[i-1] != 'while':
 				 # 	if i != 0:
 				 # 		self.tokens[i] ='string'
-				 else:
+				else:
 				 	if self.tokens[i-1] == 'while' or self.tokens[i-1] == 'if' and re.match('[a-z]',self.tokens[i]) and self.tokens[i] != 'var':
-				 		if self.tokens.count(self.tokens[i]) <= 2:
+				 		if self.tokens.count(self.tokens[i]) < 2:
 				 			self.check.append(self.tokens[i])
 				 			# print(self.check)
 		op = ['+','-','*','/']		
