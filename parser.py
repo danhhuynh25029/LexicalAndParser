@@ -17,7 +17,7 @@ grammar1 = nltk.CFG.fromstring("""
   block -> if_stmt|print_stmt | assign | 'tab' block | for_stmt | while
   block_s -> if_stmt | assign
   print_s -> print_stmt | while_stmt | for_stmt | if_stmt
-  i_r -> indentifer '+' '=' n | indentifer '-' '=' n | ndentifer '*' '=' n | ndentifer '/' '=' n | assign |  assign_s
+  i_r -> indentifer '+' '=' n | indentifer '-' '=' n | indentifer '*' '=' n | indentifer '/' '=' n |  assign
   assign_s -> assign |if_stmt | print_stmt | i_r
   indentifer -> 'var'
   compare -> '<'|'>'|'>='|'<='|'=='

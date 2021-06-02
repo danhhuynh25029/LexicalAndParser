@@ -107,7 +107,7 @@ class Lexical:
 			if self.tokens[i] not in tmp and not re.match("[0-9]",self.tokens[i]) and self.tokens[i] != 'var':
 				cou = 0
 				for j in range(i,len(self.tokens)):
-					if self.tokens[j] == "colon" and cou < 2:
+					if self.tokens[j] == "colon" and cou < 2 and self.tokens[i-1] != 'for':
 						self.check.append(self.tokens[i])
 						break
 					if self.tokens[j] == self.tokens[i]:
