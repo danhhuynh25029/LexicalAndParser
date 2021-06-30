@@ -6,7 +6,7 @@ Thư viện sử dụng:
 * Qt
 
 Cách cài đặt:
-<pre>p install -r requirements.txt</pre>
+<pre>pip install -r requirements.txt</pre>
 
 Cách sử dụng:
 <pre>python test.py</pre>
