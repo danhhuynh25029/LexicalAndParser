@@ -14,7 +14,7 @@ Cách sử dụng:
 
 
 Hình ảnh ứng dụng:
-<p >
+<p align="center">
 ![Screenshot from 2021-06-23 07-41-13](https://user-images.githubusercontent.com/62138169/124783158-0ef17080-df6f-11eb-9069-698894044646.png)
 </p>
 
