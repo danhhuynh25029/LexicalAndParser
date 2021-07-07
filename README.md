@@ -16,7 +16,8 @@ Cách sử dụng:
 
 Một vài hình ảnh sản phẩm:
 
-![Screenshot from 2021-06-23 07-39-02](https://user-images.githubusercontent.com/62138169/124782841-c5088a80-df6e-11eb-8834-b0c83b3f7470.png)
+![Screenshot from 2021-06-23 07-41-13](https://user-images.githubusercontent.com/62138169/124783158-0ef17080-df6f-11eb-9069-698894044646.png)
+
 
 
 [1]:https://github.com/danhhuynh25029/LexicalAndParser/tree/master/slide%20v%C3%A0%20t%C3%A0i%20li%E1%BB%87u%20tham%20kh%E1%BA%A3o
