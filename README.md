@@ -1,19 +1,19 @@
 # LexicalAndParser
 Phân tích cú pháp ngôn ngữ Python
 
-Thư viện sử dụng:
+### Thư viện sử dụng:
 * nltk
 * Qt
 
-Cách cài đặt:
+### Cách cài đặt:
 <pre>pip install -r requirements.txt</pre>
 
-Cách sử dụng:
+### Cách sử dụng:
 <pre>python test.py</pre>
 
 
 
-Hình ảnh ứng dụng:
+### Hình ảnh ứng dụng:
 <p align="center">
    <img src="https://user-images.githubusercontent.com/62138169/124783158-0ef17080-df6f-11eb-9069-698894044646.png"/>
 </p>
