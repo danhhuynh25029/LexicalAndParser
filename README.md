@@ -1,25 +1,25 @@
 # LexicalAndParser
-Phân tích cú pháp ngôn ngữ Python
+This is a project to check syntax for Python
 
-### Thư viện sử dụng:
+### libraries:
 * nltk
 * Qt
 
-### Cách cài đặt:
+### How to install:
 <pre>pip install -r requirements.txt</pre>
 
-### Cách sử dụng:
+### How to use:
 <pre>python test.py</pre>
 
 
 
-### Hình ảnh ứng dụng:
+### Images:
 <p align="center">
    <img src="https://user-images.githubusercontent.com/62138169/124783158-0ef17080-df6f-11eb-9069-698894044646.png"/>
 </p>
 
-- [x] [slide và tài liệu tham khảo][1]
-- [x] [Báo cáo đồ án][2]
+- [x] [Slide][1]
+- [x] [Report][2]
 
 [1]:https://github.com/danhhuynh25029/LexicalAndParser/tree/master/slide%20v%C3%A0%20t%C3%A0i%20li%E1%BB%87u%20tham%20kh%E1%BA%A3o
 
